@@ -23,6 +23,7 @@ function App() {
             element={
               <>
                 <HeroSection />
+                <AboutUsSection />
                 <MeetTheParentsSection />
                 <PuppiesList />
                 <ContactUsSection />

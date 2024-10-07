@@ -63,7 +63,7 @@ const HeroSection = () => {
       <div className="absolute inset-0 flex flex-col justify-center items-center text-center text-white p-6 z-10">
         {/* Headline */}
         <h1 className="text-5xl md:text-8xl font-extrabold mb-6 crt-text">
-          Adopt American Bullies Near You
+          American Bullies in Orlando 
         </h1>
         {/* Description */}
         <p className="text-lg md:text-3xl mb-8 max-w-3xl crt-text">
