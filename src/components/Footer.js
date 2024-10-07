@@ -13,15 +13,15 @@ function Footer() {
           <ul>
             <li className="mb-2">
               <FontAwesomeIcon icon={faPhone} className="mr-2" />
-              +1 (123) 456-7890
+              +1 (347) 928-8541
             </li>
             <li className="mb-2">
               <FontAwesomeIcon icon={faEnvelope} className="mr-2" />
-              info@example.com
+              fifthcitybreedersinfo@gmail.com
             </li>
             <li>
               <FontAwesomeIcon icon={faMapMarkerAlt} className="mr-2" />
-              123 Puppy St, Dogtown, USA
+              Orlando, Kissimmee, Buenaventura Lakes, Central Florida
             </li>
           </ul>
         </div>
@@ -51,38 +51,7 @@ function Footer() {
             </li>
           </ul>
         </div>
-        {/* Social Media */}
-        <div>
-          <h3 className="text-xl font-bold text-white mb-4">Follow Us</h3>
-          <div className="flex space-x-4">
-            <a href="https://facebook.com" className="text-gray-400 hover:text-white">
-              <FontAwesomeIcon icon={faFacebook} className="text-2xl" />
-            </a>
-            <a href="https://instagram.com" className="text-gray-400 hover:text-white">
-              <FontAwesomeIcon icon={faInstagram} className="text-2xl" />
-            </a>
-            <a href="https://twitter.com" className="text-gray-400 hover:text-white">
-              <FontAwesomeIcon icon={faTwitter} className="text-2xl" />
-            </a>
-          </div>
-        </div>
-        {/* Newsletter Signup
-        <div>
-          <h3 className="text-xl font-bold text-white mb-4">Subscribe to Our Newsletter</h3>
-          <form>
-            <input
-              type="email"
-              placeholder="Your email"
-              className="w-full mb-4 p-2 rounded bg-gray-800 text-white placeholder-gray-500 focus:outline-none"
-            />
-            <button
-              type="submit"
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded"
-            >
-              Subscribe
-            </button>
-          </form>
-        </div> */}
+        
       </div>
       <div className="text-center mt-8 text-gray-500">
         © {new Date().getFullYear()} 5th City Breeders. All rights reserved.
