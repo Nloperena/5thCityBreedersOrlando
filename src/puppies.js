@@ -20,7 +20,7 @@ export const puppies = [
       "puppyB-4.jpg"
     ],
     available: true,
-    male: false
+    male: true
   },
   {
     id: "C",
@@ -60,7 +60,7 @@ export const puppies = [
       "puppyE-5.jpg"
     ],
     available: true,
-    male: false
+    male: true
   },
   {
     id: "F",
@@ -108,7 +108,7 @@ export const puppies = [
       "puppyI-4.jpg"
     ],
     available: true,
-    male: false
+    male: true
   },
   {
     id: "J",
@@ -136,7 +136,7 @@ export const puppies = [
       "puppyK-10.jpg"
     ],
     available: true,
-    male: false
+    male: true
   },
   {
     id: "L",
@@ -161,7 +161,7 @@ export const puppies = [
       "puppyM-3.jpg"
     ],
     available: true,
-    male: false
+    male: true
   },
   {
     id: "N",
