@@ -27,16 +27,21 @@ function PuppyBenefitsSection() {
   ];
 
   return (
-    <div className="p-8 bg-blue-50 rounded-lg shadow-lg mt-8">
-      <h2 className="text-3xl font-bold mb-4">What Do You Get When You Buy One of Our Puppies?</h2>
-      <p className="text-gray-700 mb-6">Each puppy comes with everything you need to start your journey together:</p>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+    <div className="p-10 bg-gradient-to-r from-blue-100 to-blue-50 rounded-xl shadow-xl mt-10">
+      <h2 className="text-4xl font-extrabold mb-6 text-blue-700">What Do You Get When You Buy One of Our Puppies?</h2>
+      <p className="text-gray-700 mb-8 text-lg">Each puppy comes with everything you need to start your journey together:</p>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
         {benefits.map((benefit, index) => (
-          <div key={index} className="flex items-center space-x-4">
-            <FontAwesomeIcon icon={benefit.icon} className="text-blue-600 text-3xl" />
+          <div 
+            key={index} 
+            className="flex items-center space-x-6 p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow"
+          >
+            <div className="p-4 bg-blue-100 rounded-full">
+              <FontAwesomeIcon icon={benefit.icon} className="text-blue-600 text-3xl" />
+            </div>
             <div>
-              <h3 className="text-xl font-semibold">{benefit.title}</h3>
-              <p className="text-gray-600">{benefit.description}</p>
+              <h3 className="text-2xl font-semibold text-blue-800">{benefit.title}</h3>
+              <p className="text-gray-600 mt-2">{benefit.description}</p>
             </div>
           </div>
         ))}

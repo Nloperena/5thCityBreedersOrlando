@@ -1,66 +1,49 @@
-import React from 'react';
-import { Link } from 'react-router-dom'; 
-import breedersImage from '../assets/littlegirlwith bullies.png'; 
-import breedersImage2 from '../assets/dogs.png'
+import React, { useRef, useEffect } from 'react';
 
 function AboutUsSection() {
+  const textRef = useRef(null);
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    // Adjust the video height to match the text height
+    if (textRef.current && videoRef.current) {
+      videoRef.current.style.height = `${textRef.current.clientHeight}px`;
+    }
+  }, []);
+
   return (
-    <section className="bg-gray-100 p-8">
-      <div className="max-w-6xl mx-auto">
-
-        {/* First Section - Image on the Right */}
-        <div className="flex flex-col lg:flex-row items-center gap-8 mb-12">
-          <div className="w-full lg:w-1/2 text-left">
-            <h2 className="text-4xl font-bold text-blue-800 mb-4">About Us</h2>
-            <p className="text-lg text-gray-700 mb-4">
-              At 5th City Breeders, our passion for American Bullies is matched only by our dedication to their well-being...
-            </p>
-            <p className="text-lg text-gray-700 mb-4">
-              Our breeding practices prioritize health, temperament, and structure...
-            </p>
-            {/* Contact Button */}
-            <Link to="/contact">
-              <button className="bg-blue-800 text-white rounded-lg px-6 py-3 mt-4 hover:bg-blue-900">
-                Contact Us
-              </button>
-            </Link>
-          </div>
-          <div className="w-full lg:w-1/2">
-            <img
-              src={breedersImage}
-              alt="Breeders"
-              className="rounded-lg shadow-lg object-cover w-full h-96"
-            />
-          </div>
+    <div className="p-6 md:p-12 bg-gray-100 rounded-xl shadow-lg mt-10">
+      <h2 className="text-3xl md:text-5xl font-bold text-blue-700 mb-6 text-center">About Us</h2>
+      <div className="flex flex-col md:flex-row items-center md:items-start md:space-x-8 lg:space-x-12">
+        <div className="flex justify-center md:w-1/2 w-full mb-6 md:mb-0">
+          <iframe 
+            title="vimeo-player" 
+            src="https://player.vimeo.com/video/1016879488?h=b120b525ae&autoplay=1&muted=1&loop=1" 
+            width="100%" 
+            ref={videoRef}
+            frameBorder="0" 
+            allow="autoplay; fullscreen" 
+            allowFullScreen 
+            className="rounded-lg shadow-md"
+          ></iframe>
         </div>
-
-        {/* Second Section - Image on the Left */}
-        <div className="flex flex-col lg:flex-row-reverse items-center gap-8">
-          <div className="w-full lg:w-1/2 text-left">
-            <h2 className="text-4xl font-bold text-blue-800 mb-4">Our Mission</h2>
-            <p className="text-lg text-gray-700 mb-4">
-              Our mission is to raise American Bullies that not only look beautiful but also have the ideal temperament...
-            </p>
-            <p className="text-lg text-gray-700 mb-4">
-              We carefully select our breeding pairs to ensure that each puppy inherits the best traits...
-            </p>
-            {/* Contact Button */}
-            <Link to="/puppies">
-              <button className="bg-blue-800 text-white rounded-lg px-6 py-3 mt-4 hover:bg-blue-900">
-                See Puppies
-              </button>
-            </Link>
-          </div>
-          <div className="w-full lg:w-1/2">
-            <img
-              src={breedersImage2}
-              alt="Breeders"
-              className="rounded-lg shadow-lg object-cover w-full h-96"
-            />
-          </div>
+        <div 
+          className="md:w-1/2 w-full text-gray-700 text-base md:text-lg lg:text-xl flex flex-col justify-center"
+          ref={textRef}
+        >
+          <p className="mb-4">
+            We are dedicated American Bulldog breeders based in Kissimmee, Florida. Our mission is to raise healthy, well-socialized puppies 
+            that make great companions for families and individuals alike. Each of our puppies is cared for in a loving environment, with a 
+            focus on quality and temperament.
+          </p>
+          <p>
+            Our puppies are bred with attention to both physical health and temperament, ensuring they fit right in with your family. 
+            Whether you’re in Kissimmee, Buenaventura Lakes, or Orlando, we invite you to learn more about us and discover the difference 
+            our commitment makes.
+          </p>
         </div>
       </div>
-    </section>
+    </div>
   );
 }
 
