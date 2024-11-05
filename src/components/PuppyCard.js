@@ -13,29 +13,30 @@ const PuppyCard = ({ puppy }) => {
   // State to keep track of the current image index for each puppy
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  // Total number of images available for this puppy
-  const totalImages = puppy.images.length;
+  // Use a default placeholder if images are unavailable
+  const images = puppy.images && puppy.images.length > 0 ? puppy.images : ['/path/to/placeholder.jpg'];
+  const totalImages = images.length;
 
   // Function to move to the next image in the list
   const handleNextImage = () => {
-    setCurrentImageIndex((prevIndex) =>
-      prevIndex === totalImages - 1 ? 0 : prevIndex + 1
-    );
+    if (totalImages > 1) {
+      setCurrentImageIndex((prevIndex) => (prevIndex === totalImages - 1 ? 0 : prevIndex + 1));
+    }
   };
 
   // Function to move to the previous image in the list
   const handlePrevImage = () => {
-    setCurrentImageIndex((prevIndex) =>
-      prevIndex === 0 ? totalImages - 1 : prevIndex - 1
-    );
+    if (totalImages > 1) {
+      setCurrentImageIndex((prevIndex) => (prevIndex === 0 ? totalImages - 1 : prevIndex - 1));
+    }
   };
 
   // Sample contact information
   const phoneNumber = "555-1234";
   const email = "info@puppystore.com";
 
-  // Update the image path to the new 'puppypictures-updated' folder
-  const currentImageUrl = `/assets/puppypictures-updated/${puppy.images[currentImageIndex]}`;
+  // Update the image path to the new 'puppypictures-updated' folder or use placeholder
+  const currentImageUrl = `/assets/puppypictures-updated/${images[currentImageIndex]}`;
 
   return (
     <div className="relative rounded-xl overflow-hidden shadow-lg transform transition hover:scale-105 duration-300">
@@ -51,7 +52,7 @@ const PuppyCard = ({ puppy }) => {
       {/* Main Image */}
       <img
         src={currentImageUrl}
-        alt={`${puppy.name}`}
+        alt={`${puppy.name || 'Puppy'}`}
         className="w-full h-full object-cover cursor-pointer relative z-10"
         onClick={handleNextImage}
       />
@@ -94,7 +95,7 @@ const PuppyCard = ({ puppy }) => {
         {/* Bottom Section */}
         <div>
           {/* Puppy Name */}
-          <h3 className="text-3xl font-bold text-white">{puppy.name}</h3>
+          <h3 className="text-3xl font-bold text-white">{puppy.name || 'Unknown Puppy'}</h3>
 
           {/* Gender Icon and Text */}
           <div className="flex items-center mt-2">
