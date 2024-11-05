@@ -1,19 +1,37 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPhoneAlt, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import emailjs from 'emailjs-com';
 
 function ContactUsSection() {
+  const [loading, setLoading] = useState(false);
+  const [messageStatus, setMessageStatus] = useState(null); // Success or error message status
+  const [showForm, setShowForm] = useState(true); // Controls the form visibility
+
+  // Initialize EmailJS with the public key when component mounts
+  useEffect(() => {
+    emailjs.init('_byCfFtPNSpDFGqh9');  // Ensure this is your actual public key
+  }, []);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    emailjs.sendForm('service_wwmtqsm', 'template_mpot1qd', e.target, 'user_YOUR_USER_ID')
+    setLoading(true);
+    setMessageStatus(null);
+
+    emailjs.sendForm('service_wwmtqsm', 'template_ure3rh3', e.target, '_byCfFtPNSpDFGqh9')
       .then((result) => {
-          console.log(result.text);
+        setLoading(false);
+        setMessageStatus('success');
+        setShowForm(false); // Hide the form after successful submission
       }, (error) => {
-          console.log(error.text);
+        setLoading(false);
+        setMessageStatus('error');
       });
-    e.target.reset();
+  };
+
+  const handleConfirmation = () => {
+    setMessageStatus(null);
+    setShowForm(true); // Show the form again
   };
 
   return (
@@ -23,8 +41,7 @@ function ContactUsSection() {
         <p className="text-lg text-gray-700 mb-8">
           We would love to hear from you! Whether you have questions about our puppies or our breeding practices, feel free to reach out.
         </p>
-        
-        {/* Contact Information */}
+
         <div className="flex flex-col md:flex-row justify-center gap-8 mb-8">
           <div className="flex items-center gap-4">
             <FontAwesomeIcon icon={faPhoneAlt} className="text-blue-800 text-2xl" />
@@ -36,44 +53,66 @@ function ContactUsSection() {
           </div>
         </div>
 
-        {/* Contact Form */}
-        <form onSubmit={handleSubmit} className="bg-white shadow-lg rounded-lg p-8 max-w-2xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        {/* Contact Form or Confirmation Message */}
+        {showForm ? (
+          <form onSubmit={handleSubmit} className="bg-white shadow-lg rounded-lg p-8 max-w-2xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+              <input
+                type="text"
+                name="from_name"
+                className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Your Name"
+                required
+              />
+              <input
+                type="email"
+                name="from_email"
+                className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Your Email"
+                required
+              />
+            </div>
             <input
               type="text"
-              name="user_name"
-              className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Your Name"
-              required
+              name="subject"
+              className="border border-gray-300 rounded-lg p-3 w-full mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Subject"
             />
-            <input
-              type="email"
-              name="user_email"
-              className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Your Email"
+            <textarea
+              name="message"
+              className="border border-gray-300 rounded-lg p-3 w-full mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              rows="5"
+              placeholder="Your Message"
               required
-            />
+            ></textarea>
+            <button
+              type="submit"
+              className={`bg-blue-800 text-white rounded-lg px-6 py-3 w-full font-semibold hover:bg-blue-900 focus:ring-4 focus:ring-blue-300 transition duration-200 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+              disabled={loading}
+            >
+              {loading ? 'Sending...' : 'Send Message'}
+            </button>
+          </form>
+        ) : (
+          <div className="bg-white shadow-lg rounded-lg p-8 max-w-2xl mx-auto flex flex-col items-center">
+            {messageStatus === 'success' && (
+              <div className="text-green-700 text-2xl mb-4">
+                Your message has been sent successfully!
+              </div>
+            )}
+            {messageStatus === 'error' && (
+              <div className="text-red-700 text-2xl mb-4">
+                There was an error sending your message. Please try again later.
+              </div>
+            )}
+            <button
+              onClick={handleConfirmation}
+              className="bg-blue-800 text-white rounded-lg px-6 py-3 w-full font-semibold hover:bg-blue-900 focus:ring-4 focus:ring-blue-300 transition duration-200"
+            >
+              OK
+            </button>
           </div>
-          <input
-            type="text"
-            name="subject"
-            className="border border-gray-300 rounded-lg p-3 w-full mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Subject"
-          />
-          <textarea
-            name="message"
-            className="border border-gray-300 rounded-lg p-3 w-full mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            rows="5"
-            placeholder="Your Message"
-            required
-          ></textarea>
-          <button
-            type="submit"
-            className="bg-blue-800 text-white rounded-lg px-6 py-3 w-full font-semibold hover:bg-blue-900 focus:ring-4 focus:ring-blue-300 transition duration-200"
-          >
-            Send Message
-          </button>
-        </form>
+        )}
       </div>
     </section>
   );

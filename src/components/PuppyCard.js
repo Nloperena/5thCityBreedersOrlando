@@ -10,26 +10,32 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 const PuppyCard = ({ puppy }) => {
+  // State to keep track of the current image index for each puppy
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
+  // Total number of images available for this puppy
   const totalImages = puppy.images.length;
 
+  // Function to move to the next image in the list
   const handleNextImage = () => {
     setCurrentImageIndex((prevIndex) =>
       prevIndex === totalImages - 1 ? 0 : prevIndex + 1
     );
   };
 
+  // Function to move to the previous image in the list
   const handlePrevImage = () => {
     setCurrentImageIndex((prevIndex) =>
       prevIndex === 0 ? totalImages - 1 : prevIndex - 1
     );
   };
 
+  // Sample contact information
   const phoneNumber = "555-1234";
   const email = "info@puppystore.com";
 
-  const currentImageUrl = `/assets/puppypictures/${puppy.images[currentImageIndex]}`;
+  // Update the image path to the new 'puppypictures-updated' folder
+  const currentImageUrl = `/assets/puppypictures-updated/${puppy.images[currentImageIndex]}`;
 
   return (
     <div className="relative rounded-xl overflow-hidden shadow-lg transform transition hover:scale-105 duration-300">
