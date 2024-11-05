@@ -51,9 +51,10 @@ function App() {
 
           {/* Contact Page */}
           <Route path="/contact" element={
-        <> <ContactUsSection />
-        {/* <PuppyAdoptionSection /> */}
-        </>    
+            <>
+            <MeetTheParentsSection />
+            <ContactUsSection />
+            </> 
        } />
 
           {/* 404 Page */}
