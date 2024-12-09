@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMars, faVenus, faPhone, faEnvelope, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
@@ -75,74 +75,78 @@ const PuppyCard = ({ puppy, delayIndex = 0 }) => {
         `}
       </style>
 
-      <div
-        className="relative bg-white rounded-lg shadow-lg overflow-hidden hover:scale-105 transform-gpu"
-        style={cardStyle}
-      >
-        {/* Image Container */}
-        <div className="relative w-full aspect-square">
-          <img
-            src={images[currentImageIndex]}
-            alt={puppy.name}
-            className="w-full h-full object-cover"
-          />
-          {totalImages > 1 && (
-            <>
-              {/* Left Arrow */}
-              <button
-                onClick={handlePrevImage}
-                className="absolute top-1/2 left-2 transform -translate-y-1/2 bg-white bg-opacity-70 p-2 rounded-full shadow 
-                          hover:text-black focus:outline-none transition-colors transition-transform duration-200 active:scale-95"
-              >
-                <FontAwesomeIcon icon={faChevronLeft} />
-              </button>
+      {/* Wrapper div with 'group' class to control hover state */}
+      <div className="group inline-block">
+        {/* The card now responds to group hover */}
+        <div
+          className="relative bg-white rounded-lg shadow-lg overflow-hidden transform-gpu transition-transform duration-300 group-hover:scale-105 group-hover:rotate-1"
+          style={cardStyle}
+        >
+          {/* Image Container */}
+          <div className="relative w-full aspect-square">
+            <img
+              src={images[currentImageIndex]}
+              alt={puppy.name}
+              className="w-full h-full object-cover"
+            />
+            {totalImages > 1 && (
+              <>
+                {/* Left Arrow */}
+                <button
+                  onClick={handlePrevImage}
+                  className="absolute top-1/2 left-2 transform -translate-y-1/2 bg-white bg-opacity-70 p-2 rounded-full shadow 
+                            hover:text-black focus:outline-none transition-colors transition-transform duration-200 active:scale-95"
+                >
+                  <FontAwesomeIcon icon={faChevronLeft} />
+                </button>
 
-              {/* Right Arrow */}
-              <button
-                onClick={handleNextImage}
-                className="absolute top-1/2 right-2 transform -translate-y-1/2 bg-white bg-opacity-70 p-2 rounded-full shadow 
-                          hover:text-black focus:outline-none transition-colors transition-transform duration-200 active:scale-95"
-              >
-                <FontAwesomeIcon icon={faChevronRight} />
-              </button>
-            </>
-          )}
-        </div>
-
-        {/* Content Section */}
-        <div className="p-6">
-          <h3 className="text-xl font-semibold text-gray-800">{puppy.name}</h3>
-          <p className="text-sm text-gray-600 mb-4">
-            {puppy.gender === 'Male' ? (
-              <FontAwesomeIcon icon={faMars} className="text-blue-500" />
-            ) : (
-              <FontAwesomeIcon icon={faVenus} className="text-pink-500" />
+                {/* Right Arrow */}
+                <button
+                  onClick={handleNextImage}
+                  className="absolute top-1/2 right-2 transform -translate-y-1/2 bg-white bg-opacity-70 p-2 rounded-full shadow 
+                            hover:text-black focus:outline-none transition-colors transition-transform duration-200 active:scale-95"
+                >
+                  <FontAwesomeIcon icon={faChevronRight} />
+                </button>
+              </>
             )}
-            <span className="ml-2">{puppy.gender}</span>
-          </p>
-          <span
-            className={`inline-block px-3 py-1 rounded-full text-sm font-medium ${
-              puppy.available ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-            }`}
-          >
-            {puppy.available ? 'Available' : 'Not Available'}
-          </span>
+          </div>
 
-          <div className="mt-4 flex justify-between">
-            <a
-              href={`tel:${phoneNumber}`}
-              className="flex items-center justify-center bg-blue-500 text-white font-medium py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-300"
+          {/* Content Section */}
+          <div className="p-6">
+            <h3 className="text-xl font-semibold text-gray-800">{puppy.name}</h3>
+            <p className="text-sm text-gray-600 mb-4">
+              {puppy.gender === 'Male' ? (
+                <FontAwesomeIcon icon={faMars} className="text-blue-500" />
+              ) : (
+                <FontAwesomeIcon icon={faVenus} className="text-pink-500" />
+              )}
+              <span className="ml-2">{puppy.gender}</span>
+            </p>
+            <span
+              className={`inline-block px-3 py-1 rounded-full text-sm font-medium ${
+                puppy.available ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+              }`}
             >
-              <FontAwesomeIcon icon={faPhone} className="mr-2" />
-              Call
-            </a>
-            <a
-              href={`mailto:${email}`}
-              className="flex items-center justify-center bg-green-500 text-white font-medium py-2 px-4 rounded-lg hover:bg-green-600 transition-colors duration-300"
-            >
-              <FontAwesomeIcon icon={faEnvelope} className="mr-2" />
-              Email
-            </a>
+              {puppy.available ? 'Available' : 'Not Available'}
+            </span>
+
+            <div className="mt-4 flex justify-between">
+              <a
+                href={`tel:${phoneNumber}`}
+                className="flex items-center justify-center bg-blue-500 text-white font-medium py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-300"
+              >
+                <FontAwesomeIcon icon={faPhone} className="mr-2" />
+                Call
+              </a>
+              <a
+                href={`mailto:${email}`}
+                className="flex items-center justify-center bg-green-500 text-white font-medium py-2 px-4 rounded-lg hover:bg-green-600 transition-colors duration-300"
+              >
+                <FontAwesomeIcon icon={faEnvelope} className="mr-2" />
+                Email
+              </a>
+            </div>
           </div>
         </div>
       </div>

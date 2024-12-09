@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -14,18 +15,17 @@ function Navbar() {
 
         {/* Desktop Menu */}
         <div className="hidden md:flex space-x-4">
-          <Link to="/" className="hover:text-gray-300">
-            Home
-          </Link>
-          <Link to="/about" className="hover:text-gray-300">
-            About
-          </Link>
-          <Link to="/puppies" className="hover:text-gray-300">
-            Puppies
-          </Link>
-          <Link to="/contact" className="hover:text-gray-300">
-            Contact
-          </Link>
+          {['Home', 'About', 'Puppies', 'Contact'].map((item, idx) => (
+            <motion.div
+              key={idx}
+              whileHover={{ scale: 1.1, rotate: 2 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Link to={`/${item.toLowerCase()}`} className="hover:text-gray-300">
+                {item}
+              </Link>
+            </motion.div>
+          ))}
         </div>
 
         {/* Mobile Menu Button */}
@@ -34,7 +34,6 @@ function Navbar() {
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Toggle menu"
         >
-          {/* Hamburger Icon */}
           <svg
             className="w-6 h-6 text-white"
             fill="none"
@@ -42,21 +41,9 @@ function Navbar() {
             viewBox="0 0 24 24"
           >
             {menuOpen ? (
-              // Close Icon
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             ) : (
-              // Hamburger Icon
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 8h16M4 16h16"
-              />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8h16M4 16h16" />
             )}
           </svg>
         </button>
@@ -64,46 +51,33 @@ function Navbar() {
 
       {/* Mobile Menu Overlay */}
       {menuOpen && (
-        <div className="md:hidden fixed inset-0 bg-black bg-opacity-50 z-10">
-          {/* Menu Content */}
+        <motion.div
+          initial={{ opacity: 0, x: -200 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -200 }}
+          transition={{ duration: 0.5 }}
+          className="md:hidden fixed inset-0 bg-black bg-opacity-50 z-10"
+        >
           <div className="fixed top-0 right-0 w-3/4 max-w-xs h-full bg-blue-800 shadow-lg z-20 p-6">
             <nav className="flex flex-col space-y-6 mt-10">
-              <Link
-                to="/"
-                className="text-white text-lg hover:text-gray-300"
-                onClick={() => setMenuOpen(false)}
-              >
-                Home
-              </Link>
-              <Link
-                to="/about"
-                className="text-white text-lg hover:text-gray-300"
-                onClick={() => setMenuOpen(false)}
-              >
-                About
-              </Link>
-              <Link
-                to="/puppies"
-                className="text-white text-lg hover:text-gray-300"
-                onClick={() => setMenuOpen(false)}
-              >
-                Puppies
-              </Link>
-              <Link
-                to="/contact"
-                className="text-white text-lg hover:text-gray-300"
-                onClick={() => setMenuOpen(false)}
-              >
-                Contact
-              </Link>
+              {['Home', 'About', 'Puppies', 'Contact'].map((item, idx) => (
+                <motion.div
+                  key={idx}
+                  whileHover={{ scale: 1.1, x: 5 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Link
+                    to={`/${item.toLowerCase()}`}
+                    className="text-white text-lg hover:text-gray-300"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    {item}
+                  </Link>
+                </motion.div>
+              ))}
             </nav>
           </div>
-          {/* Close the menu when clicking outside */}
-          <div
-            className="w-full h-full"
-            onClick={() => setMenuOpen(false)}
-          ></div>
-        </div>
+        </motion.div>
       )}
     </nav>
   );

@@ -1,49 +1,79 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBone, faCertificate, faHome, faMedkit } from '@fortawesome/free-solid-svg-icons';
+import { faShieldAlt, faSmile, faHeart, faRunning } from '@fortawesome/free-solid-svg-icons';
+import { motion } from 'framer-motion';
 
 function PuppyBenefitsSection() {
   const benefits = [
     {
-      icon: faBone,
-      title: 'Starter Kit',
-      description: 'Includes food, toys, and accessories to help your puppy adjust to their new home.',
+      icon: faShieldAlt,
+      title: 'Natural Protectors',
+      description:
+        'American Bulldogs are known for their protective instincts, ensuring your family’s safety with unwavering loyalty.',
     },
     {
-      icon: faCertificate,
-      title: 'Registration Papers',
-      description: 'All our puppies come with full registration and pedigree papers.',
+      icon: faSmile,
+      title: 'Family-Friendly',
+      description:
+        'These dogs thrive in family settings, offering love, patience, and playful companionship for everyone, including kids.',
     },
     {
-      icon: faHome,
-      title: 'House Training Guide',
-      description: 'Step-by-step guide to help you train your puppy quickly and effectively.',
+      icon: faHeart,
+      title: 'Loving Companions',
+      description:
+        'With their affectionate nature, American Bulldogs form deep emotional bonds, enriching your life with loyalty and love.',
     },
     {
-      icon: faMedkit,
-      title: 'Health Certificate',
-      description: 'Certified health certificate from a licensed veterinarian ensuring your puppy is in top health.',
+      icon: faRunning,
+      title: 'Energetic and Active',
+      description:
+        'They love outdoor adventures, encouraging an active lifestyle with fun activities like running and playing.',
     },
   ];
 
+  const cardVariants = {
+    hidden: { opacity: 0, scale: 0.9 },
+    visible: (i) => ({
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 0.5,
+        delay: i * 0.2,
+        ease: 'easeOut',
+      },
+    }),
+  };
+
   return (
-    <div className="p-10 bg-gradient-to-r from-blue-100 to-blue-50 rounded-xl shadow-xl mt-10">
-      <h2 className="text-4xl font-extrabold mb-6 text-blue-700">What Do You Get When You Buy One of Our Puppies?</h2>
-      <p className="text-gray-700 mb-8 text-lg">Each puppy comes with everything you need to start your journey together:</p>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+    <div className="p-10 bg-gradient-to-r from-blue-900 to-blue-700 rounded-xl shadow-xl mt-10">
+      <h2 className="text-4xl font-extrabold mb-6 text-blue-100 text-center">
+        Why Choose an American Bulldog?
+      </h2>
+      <p className="text-blue-200 mb-10 text-lg text-center">
+        Discover the unique qualities that make American Bulldogs a cherished part of your family.
+      </p>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         {benefits.map((benefit, index) => (
-          <div 
-            key={index} 
-            className="flex items-center space-x-6 p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow"
+          <motion.div
+            key={index}
+            className="relative flex flex-col items-center bg-gradient-to-b from-blue-800 to-blue-700 rounded-lg shadow-lg hover:shadow-2xl transition-all p-8 transform hover:-translate-y-2"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            custom={index}
+            variants={cardVariants}
           >
-            <div className="p-4 bg-blue-100 rounded-full">
-              <FontAwesomeIcon icon={benefit.icon} className="text-blue-600 text-3xl" />
+            {/* Icon Container */}
+            <div className="absolute -top-8 flex items-center justify-center w-16 h-16 bg-blue-900 rounded-full shadow-lg">
+              <FontAwesomeIcon icon={benefit.icon} className="text-blue-300 text-3xl" />
             </div>
-            <div>
-              <h3 className="text-2xl font-semibold text-blue-800">{benefit.title}</h3>
-              <p className="text-gray-600 mt-2">{benefit.description}</p>
+
+            {/* Content */}
+            <div className="mt-10 text-center">
+              <h3 className="text-xl font-bold text-blue-100 mb-2">{benefit.title}</h3>
+              <p className="text-blue-200">{benefit.description}</p>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
     </div>
