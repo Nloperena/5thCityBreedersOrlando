@@ -10,6 +10,7 @@ import ContactUsSection from './components/ContactUsSection';
 import Footer from './components/Footer';
 import PuppyFormSection from './components/PuppyFormSection';
 import AboutCards from './components/AboutCards';
+import ParentsSection from './components/ParentSection';
 
 function App() {
   return (
@@ -24,8 +25,7 @@ function App() {
               <>
                 <HeroSection />
                 <AboutUsSection />
-                <MeetTheParentsSection />
-                <PuppiesList />
+                <ParentsSection />
                 <ContactUsSection />
               </>
             }
@@ -42,8 +42,7 @@ function App() {
             path="/puppies"
             element={
               <>
-                <MeetTheParentsSection />
-                <PuppiesList />
+                <ParentsSection />
                 <ContactUsSection />
               </>
             }
@@ -52,8 +51,8 @@ function App() {
           {/* Contact Page */}
           <Route path="/contact" element={
             <>
-            <MeetTheParentsSection />
             <ContactUsSection />
+            <AboutCards />
             </> 
        } />
 

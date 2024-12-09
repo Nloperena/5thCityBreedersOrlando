@@ -1,78 +1,87 @@
 import React, { useState, useEffect } from 'react';
-import { puppies } from '../puppies';
+import { fetchPuppies, fetchParents } from '../services/contentfulService';
 import PuppyCard from './PuppyCard';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPaw } from '@fortawesome/free-solid-svg-icons';
 
-const PuppiesList = () => {
-  const [puppyData, setPuppyData] = useState(puppies);
+function PuppiesList({ selectedParentId }) {
+  // Keep track of puppies and their age
+  const [puppies, setPuppies] = useState([]);
+  const [litterDoB, setLitterDoB] = useState(null);
+  const [age, setAge] = useState('');
 
-  // Set the puppies' date of birth to 9 weeks ago from 9 days before November 4
-  const referenceDate = new Date('2024-11-04');
-  referenceDate.setDate(referenceDate.getDate() - 9); // 9 days before November 4
-  const puppiesBirthDate = new Date(referenceDate);
-  puppiesBirthDate.setDate(puppiesBirthDate.getDate() - 63); // 9 weeks * 7 days
+  // Function to figure out how old the puppies are
+  const calculateAge = (dob) => {
+    const dobDate = new Date(dob);      // Date they were born
+    const now = new Date();             // Today
+    const difference = Math.floor((now - dobDate) / (1000 * 60 * 60 * 24)); // Days difference
+
+    const weeks = Math.floor(difference / 7);   // How many full weeks
+    const days = difference % 7;                // How many days after full weeks
+    return `${weeks} week${weeks !== 1 ? 's' : ''} and ${days} day${days !== 1 ? 's' : ''}`;
+  };
 
   useEffect(() => {
-    console.log('Puppies data:', puppyData);
-  }, [puppyData]);
+    // Fetch parent info to get when the litter was born
+    fetchParents().then((parents) => {
+      const selectedParent = parents.find((parent) => parent.id === selectedParentId);
+      if (selectedParent && selectedParent.litterDoB) {
+        setLitterDoB(selectedParent.litterDoB);
+        setAge(calculateAge(selectedParent.litterDoB));
+      }
+    });
 
-  const today = new Date();
-  const ageInWeeks = Math.floor(
-    (today - puppiesBirthDate) / (7 * 24 * 60 * 60 * 1000)
-  );
+    // Fetch puppies for this parent
+    fetchPuppies().then((data) => {
+      const filteredPuppies = data.filter((puppy) =>
+        puppy.parentIds.includes(selectedParentId)
+      );
+      setPuppies(filteredPuppies);
+    });
+  }, [selectedParentId]);
 
   return (
-    <section className="bg-gradient-to-br from-blue-700 to-blue-800 text-white p-8 relative overflow-hidden">
-      {/* Parallax Paw Icons */}
-      <div className="absolute inset-0 -z-10 flex flex-wrap justify-around opacity-20">
-        {[...Array(20)].map((_, index) => (
-          <FontAwesomeIcon
-            key={index}
-            icon={faPaw}
-            className="text-white animate-pulse"
-            style={{
-              fontSize: `${2 + Math.random() * 3}rem`,
-              position: 'absolute',
-              top: `${Math.random() * 100}%`,
-              left: `${Math.random() * 100}%`,
-              transform: `translate(-50%, -50%) scale(${0.8 + Math.random() * 0.4})`,
-              animation: `parallaxMove ${10 + Math.random() * 10}s infinite alternate ease-in-out`,
-            }}
-          />
-        ))}
-      </div>
+    <section
+      className="relative py-16"
+      style={{
+        backgroundImage: `url('/assets/pawbg.png')`,
+        backgroundAttachment: 'fixed',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover',
+      }}
+    >
+      {/* Navy Blue Overlay */}
+      <div
+        className="absolute inset-0 z-0"
+        style={{
+          backgroundColor: 'rgba(10, 25, 47, 0.8)', 
+        }}
+      ></div>
 
-      <div className="max-w-6xl mx-auto text-center relative">
-        <p className="text-xl font-semibold mb-4">
-          Puppies are now {ageInWeeks} weeks old!
+      <div className="relative max-w-7xl mx-auto px-6 lg:px-8 text-center text-white z-10">
+        {/* Headline */}
+        <h2 className="text-5xl font-extrabold mb-4 drop-shadow-md">Puppies</h2>
+
+        {/* Subheading */}
+        <p className="text-lg mb-6 font-medium drop-shadow-sm">
+          {litterDoB
+            ? `These puppies are ${age} old, born on ${new Date(litterDoB).toLocaleDateString()}`
+            : 'The age of these puppies will be displayed here when available.'}
         </p>
 
-        <h2 className="text-3xl font-bold mb-6">See Our Puppies</h2>
-        <p>Reserving a puppy requires putting down a retainer</p>
-
-        {/* Grid layout for puppies - 3 columns on large screens */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {puppyData.map((puppy, index) => (
-            <div
-              key={index}
-              className="transform transition duration-300 hover:scale-105 hover:rotate-1 hover:shadow-2xl"
-            >
-              <PuppyCard puppy={puppy} />
-            </div>
-          ))}
-        </div>
+        {/* Puppies Grid */}
+        {puppies.length === 0 ? (
+          <p className="text-center text-gray-300">No puppies available for this parent.</p>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* We pass the index to each card so we can use it for animation delays */}
+            {puppies.map((puppy, index) => (
+              <PuppyCard key={puppy.id} puppy={puppy} delayIndex={index} />
+            ))}
+          </div>
+        )}
       </div>
-
-      {/* Parallax Animation CSS */}
-      <style>{`
-        @keyframes parallaxMove {
-          0% { transform: translateY(0) translateX(0); }
-          100% { transform: translateY(10px) translateX(10px); }
-        }
-      `}</style>
     </section>
   );
-};
+}
 
 export default PuppiesList;
