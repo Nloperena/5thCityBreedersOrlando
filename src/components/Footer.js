@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPhone, faEnvelope, faMapMarkerAlt, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 function Footer() {
   const [showPopup, setShowPopup] = useState(false);
@@ -15,7 +15,7 @@ function Footer() {
     Array.from({ length: count }).map((_, i) => ({
       id: i,
       size: extraLarge ? Math.random() * 8 + 8 : Math.random() * 3 + 2, // Larger size for extra-large stars
-      top: `${Math.random() * 100}%`, // Confined to footer and modal area
+      top: `${Math.random() * 100}%`,
       left: `${Math.random() * 100}%`,
       opacity: Math.random() * 0.5 + 0.5,
       delay: Math.random() * 2,
@@ -142,34 +142,54 @@ function Footer() {
       ))}
 
       {/* Modal */}
-      {showPopup && (
-        <motion.div
-          className="fixed bottom-24 left-1/2 transform -translate-x-1/2 bg-gray-900 text-gray-200 border border-blue-600 rounded-lg p-4 w-64 shadow-lg z-50"
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.8 }}
-          transition={{ duration: 0.3 }}
-        >
-          <button
-            onClick={togglePopup}
-            className="absolute top-2 right-2 text-gray-300 hover:text-white"
-          >
-            <FontAwesomeIcon icon={faTimes} />
-          </button>
-          <h4 className="text-xl font-bold mb-2 text-blue-300">Hi, I'm Nico!</h4>
-          <p className="text-sm mb-4">
-            I created this website! With over 6+ years of experience, I can build your dream website.
-          </p>
-          <a
-            href="https://nicoloperena.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block text-center bg-blue-600 text-white py-2 rounded-md hover:bg-blue-500 transition duration-300"
-          >
-            Visit My Website
-          </a>
-        </motion.div>
-      )}
+      <AnimatePresence>
+        {showPopup && (
+          <>
+            {/* Overlay Background */}
+            <motion.div
+              className="fixed inset-0 bg-black bg-opacity-50 z-50"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            />
+
+            {/* Modal Container */}
+            <motion.div
+              className="fixed inset-0 flex items-end justify-center z-50"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
+              <motion.div
+                className="bg-gray-900 text-gray-200 border border-blue-600 rounded-t-lg p-4 w-full sm:w-64 shadow-lg relative"
+                initial={{ y: 300, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: 300, opacity: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <button
+                  onClick={togglePopup}
+                  className="absolute top-2 right-2 text-gray-300 hover:text-white"
+                >
+                  <FontAwesomeIcon icon={faTimes} />
+                </button>
+                <h4 className="text-xl font-bold mb-2 text-blue-300">Hi, I'm Nico!</h4>
+                <p className="text-sm mb-4">
+                  I created this website! With over 6+ years of experience, I can build your dream website.
+                </p>
+                <a
+                  href="https://nicoloperena.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block text-center bg-blue-600 text-white py-2 rounded-md hover:bg-blue-500 transition duration-300"
+                >
+                  Visit My Website
+                </a>
+              </motion.div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </footer>
   );
 }
