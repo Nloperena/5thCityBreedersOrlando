@@ -21,7 +21,10 @@ function Navbar() {
               whileHover={{ scale: 1.1, rotate: 2 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Link to={`/${item.toLowerCase()}`} className="hover:text-gray-300">
+              <Link
+                to={item === 'Home' ? '/' : `/${item.toLowerCase()}`} // Handle 'Home' separately
+                className="hover:text-gray-300"
+              >
                 {item}
               </Link>
             </motion.div>
@@ -67,7 +70,7 @@ function Navbar() {
                   whileTap={{ scale: 0.95 }}
                 >
                   <Link
-                    to={`/${item.toLowerCase()}`}
+                    to={item === 'Home' ? '/' : `/${item.toLowerCase()}`} // Handle 'Home' separately
                     className="text-white text-lg hover:text-gray-300"
                     onClick={() => setMenuOpen(false)}
                   >

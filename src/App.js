@@ -30,7 +30,7 @@ function AnimatedRoutes() {
                 <ParentsSection />
               </AnimatedSection>
               <AnimatedSection>
-              <PuppyBenefitsSection />
+             
                 <ContactUsSection />
               </AnimatedSection>
             </>

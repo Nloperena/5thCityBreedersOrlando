@@ -40,7 +40,7 @@ function PuppiesList({ selectedParentId }) {
 
   return (
     <section
-      className="relative py-16"
+      className="relative py-16 "
       style={{
         backgroundImage: `url('/assets/pawbg.png')`,
         backgroundAttachment: 'fixed',
